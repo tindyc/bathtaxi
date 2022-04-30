@@ -1100,10 +1100,15 @@ section {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: $primary;
+  background: #fff;
   margin: 0 auto;
   margin-bottom: 20px;
-  span{
-    font-size: 20px;
-    color: $white;
+}
+  .icon span{
+    font-size: 30px;
+    color: rgb(175, 174, 174);
   }
+
+.icon:hover {
+  background-color: #00cc81;
+}
