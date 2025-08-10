@@ -75,40 +75,6 @@ h6 {
 }
 
 /*--------------------------------------------------------------
-# Back to top button
---------------------------------------------------------------*/
-.back-to-top {
-  position: fixed;
-  visibility: hidden;
-  opacity: 0;
-  right: auto;        /* remove default right positioning */
-  left: 15px;         /* move to left side */
-  bottom: 15px;       /* distance from bottom */
-  z-index: 996;
-  background: #009961;
-  width: 32px;        /* smaller size */
-  height: 32px;
-  border-radius: 50%;
-  transition: all 0.4s;
-}
-
-.back-to-top i {
-  font-size: 18px;    /* smaller arrow icon */
-  color: #fff;
-  line-height: 0;
-}
-
-.back-to-top:hover {
-  background: #00c27b;
-  color: #fff;
-}
-
-.back-to-top.active {
-  visibility: visible;
-  opacity: 1;
-}
-
-/*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
 #header {
