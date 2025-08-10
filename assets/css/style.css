@@ -81,18 +81,19 @@ h6 {
   position: fixed;
   visibility: hidden;
   opacity: 0;
-  right: 15px;
-  bottom: 15px;
+  right: auto;        /* remove default right positioning */
+  left: 15px;         /* move to left side */
+  bottom: 15px;       /* distance from bottom */
   z-index: 996;
   background: #009961;
-  width: 40px;
-  height: 40px;
-  border-radius: 50px;
+  width: 32px;        /* smaller size */
+  height: 32px;
+  border-radius: 50%;
   transition: all 0.4s;
 }
 
 .back-to-top i {
-  font-size: 28px;
+  font-size: 18px;    /* smaller arrow icon */
   color: #fff;
   line-height: 0;
 }
@@ -1111,4 +1112,33 @@ section {
 
 .icon:hover {
   background-color: #00cc81;
+}
+
+/*--------------------------------------------------------------
+# Whatsapp
+--------------------------------------------------------------*/
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.whatsapp-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.whatsapp-float:hover {
+  background-color: #1ebe5b;
 }
