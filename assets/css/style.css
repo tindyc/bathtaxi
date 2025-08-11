@@ -1006,3 +1006,38 @@ section {
   background-color: #140f45ca !important; 
   border-color: #140f45ca !important;
 }
+
+#footer .powered-by {
+  margin-top: 10px;
+  text-align: center;
+}
+
+#footer .powered-by .powered-text {
+  font-size: 14px;
+  color: #999999c9;
+  margin-right: 6px;
+}
+
+#footer .powered-by .gotindy-logo {
+  font-size: 1em;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif; 
+  color: #d4cacac2; 
+  letter-spacing: 1px;
+}
+
+#footer .footer-links {
+  margin: 10px;
+  text-align: center;
+}
+
+#footer .footer-links a {
+  color: #ffffff;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+#footer .footer-links a:hover {
+  color: #fefefee6; 
+  text-decoration: underline;
+}
