@@ -1119,3 +1119,21 @@ section {
 .whatsapp-float:hover {
   background-color: #1ebe5b;
 }
+
+/*--------------------------------------------------------------
+# Pricing
+--------------------------------------------------------------*/
+
+.pricing-img {
+  width: 100%;
+  height: 200px; /* fixed height for alignment */
+  object-fit: cover; /* crops evenly without stretching */
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.pricing .box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
