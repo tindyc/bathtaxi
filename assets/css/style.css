@@ -1137,17 +1137,3 @@ section {
   flex-direction: column;
   justify-content: space-between;
 }
-
-.rounded-image {
-  border-radius: 15px; /* adjust curve */
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-}
-
-@media (max-width: 768px) {
-  .rounded-image {
-    margin: 15px; /* adds space around image */
-    border-radius: 15px;
-  }
-}
