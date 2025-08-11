@@ -1,23 +1,59 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use Dotenv\Dotenv;
 
 require __DIR__ . '/vendor/autoload.php';
 
-/* ---------- Load environment variables ---------- */
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+/* ---------------------------------------------
+   ENV LOADING (hPanel env -> Dotenv -> .env parse)
+---------------------------------------------- */
+function loadEnvIfNeeded(string $dir)
+{
+  // If running on Hostinger with env set in hPanel, nothing to do.
+  if (getenv('SMTP_HOST') || !file_exists($dir.'/.env')) return;
 
-/* ---------- helpers ---------- */
-function field($k) {
-    return isset($_POST[$k]) ? trim(strip_tags($_POST[$k])) : '';
+  // Try vlucas/phpdotenv if present
+  if (class_exists('Dotenv\Dotenv')) {
+    Dotenv\Dotenv::createImmutable($dir)->safeLoad();
+    return;
+  }
+
+  // Minimal fallback .env parser (no external lib)
+  $lines = @file($dir.'/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  if (!$lines) return;
+  foreach ($lines as $line) {
+    if ($line[0] === '#' || !str_contains($line, '=')) continue;
+    [$k,$v] = explode('=', $line, 2);
+    $k = trim($k);
+    $v = trim($v);
+    if ($v !== '' && ($v[0] === '"' || $v[0] === "'")) {
+      $v = trim($v, "\"'");
+    }
+    $_ENV[$k] = $v;
+    $_SERVER[$k] = $v;
+    putenv("$k=$v");
+  }
 }
 
+loadEnvIfNeeded(__DIR__);
+
+/* ---------- helpers ---------- */
+function envv($key, $default = '')
+{
+  $v = getenv($key);
+  if ($v === false || $v === '') {
+    $v = $_ENV[$key] ?? $_SERVER[$key] ?? $default;
+  }
+  return is_string($v) ? trim($v) : $v;
+}
+function field($k){ return isset($_POST[$k]) ? trim(strip_tags($_POST[$k])) : ''; }
+
+$debug = isset($_GET['debug']) && $_GET['debug'] == '1'; // ?debug=1 to see errors
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo 'error';
-    exit;
+  http_response_code(405);
+  echo 'error';
+  exit;
 }
 
 /* ---------- collect fields ---------- */
@@ -36,21 +72,35 @@ $message     = field('message');
 
 /* ---------- minimal validation ---------- */
 if (
-    $name === '' ||
-    !filter_var($email, FILTER_VALIDATE_EMAIL) ||
-    $number === '' || $pickup === '' || $destination === '' || $message === ''
+  $name === '' ||
+  !filter_var($email, FILTER_VALIDATE_EMAIL) ||
+  $number === '' || $pickup === '' || $destination === '' || $message === ''
 ) {
-    echo 'error';
-    exit;
+  echo 'error';
+  exit;
 }
 
-/* ---------- SMTP config from .env ---------- */
-$smtpHost  = $_ENV['SMTP_HOST'];
-$smtpUser  = $_ENV['SMTP_USER'];
-$smtpPass  = $_ENV['SMTP_PASS'];
-$fromEmail = $_ENV['FROM_EMAIL'];
-$fromName  = $_ENV['FROM_NAME'];
-$ownerTo   = $_ENV['OWNER_TO'];
+/* ---------- SMTP config from env ---------- */
+$smtpHost  = envv('SMTP_HOST', 'smtp.hostinger.com');
+$smtpUser  = envv('SMTP_USER', '');
+$smtpPass  = envv('SMTP_PASS', '');
+$fromEmail = envv('FROM_EMAIL', 'booking@acetoursandtransfers.co.uk');
+$fromName  = envv('FROM_NAME', 'Ace Tours & Transfers');
+$ownerTo   = envv('OWNER_TO', 'booking@acetoursandtransfers.co.uk');
+
+/* Fail fast if essential envs are missing */
+if ($smtpUser === '' || $smtpPass === '') {
+  if ($debug) {
+    header('Content-Type: text/plain');
+    echo "Missing SMTP env values.\n";
+    echo "SMTP_USER='$smtpUser'\n";
+    echo "SMTP_PASS length=".strlen($smtpPass)."\n";
+    echo "Check hPanel → Advanced → Environment Variables OR the .env file.\n";
+  } else {
+    echo 'error';
+  }
+  exit;
+}
 
 $logoUrl = 'https://acetoursandtransfers.co.uk/assets/img/ace_logo.png';
 
@@ -71,8 +121,11 @@ $ownerBody =
 "Destination: $destination\r\n\r\n".
 "Message:\r\n$message\r\n";
 
-// Make subject unique by adding destination
-$userSubject = 'We received your booking request to ' . $destination;
+/* Subject includes destination (and pickup if present) */
+$toPart   = $destination !== '' ? " to $destination" : '';
+$fromPart = $pickup !== '' ? " from $pickup" : '';
+$userSubject = "We received your booking request$toPart$fromPart";
+
 $userText =
 "Hi $name,\n\n".
 "Thanks for choosing Ace Tours & Transfers. We’ve received your request and will get back to you shortly to confirm the details.\n\n".
@@ -91,27 +144,27 @@ $userText =
 $userHtml = '
 <div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:auto;border:1px solid #eaeaea;border-radius:10px;overflow:hidden;background:#ffffff">
   <div style="background:#0f0f0f;padding:12px;text-align:center">
-    <img src="'.htmlspecialchars($logoUrl).'" alt="Ace Tours & Transfers" style="max-width:160px;height:auto">
+    <img src="'.htmlspecialchars($logoUrl, ENT_QUOTES).'" alt="Ace Tours & Transfers" style="max-width:160px;height:auto">
   </div>
   <div style="padding:20px;color:#222;line-height:1.5">
     <h2 style="margin:0 0 12px;font-weight:600;color:#0f0f0f">We received your booking request</h2>
-    <p>Hi '.htmlspecialchars($name).',</p>
+    <p>Hi '.htmlspecialchars($name, ENT_QUOTES).',</p>
     <p>Thanks for choosing <strong>Ace Tours & Transfers</strong>. We’ve received your request and will get back to you shortly to confirm the details.</p>
 
     <h3 style="margin:18px 0 8px;font-weight:600;color:#0f0f0f">Summary</h3>
     <table cellpadding="6" cellspacing="0" style="width:100%;border-collapse:collapse">
-      '.($date ? '<tr><td style="border-bottom:1px solid #eee"><strong>Date</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($date).'</td></tr>' : '').'
-      '.($time ? '<tr><td style="border-bottom:1px solid #eee"><strong>Time</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($time).'</td></tr>' : '').'
-      <tr><td style="border-bottom:1px solid #eee"><strong>Pickup</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($pickup).'</td></tr>
-      <tr><td style="border-bottom:1px solid #eee"><strong>Destination</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($destination).'</td></tr>
-      '.($passengers ? '<tr><td style="border-bottom:1px solid #eee"><strong>Passengers</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($passengers).'</td></tr>' : '').'
-      '.($luggage ? '<tr><td style="border-bottom:1px solid #eee"><strong>Luggage</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($luggage).'</td></tr>' : '').'
-      '.($flight ? '<tr><td style="border-bottom:1px solid #eee"><strong>Flight No.</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($flight).'</td></tr>' : '').'
+      '.($date ? '<tr><td style="border-bottom:1px solid #eee"><strong>Date</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($date, ENT_QUOTES).'</td></tr>' : '').'
+      '.($time ? '<tr><td style="border-bottom:1px solid #eee"><strong>Time</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($time, ENT_QUOTES).'</td></tr>' : '').'
+      <tr><td style="border-bottom:1px solid #eee"><strong>Pickup</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($pickup, ENT_QUOTES).'</td></tr>
+      <tr><td style="border-bottom:1px solid #eee"><strong>Destination</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($destination, ENT_QUOTES).'</td></tr>
+      '.($passengers ? '<tr><td style="border-bottom:1px solid #eee"><strong>Passengers</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($passengers, ENT_QUOTES).'</td></tr>' : '').'
+      '.($luggage ? '<tr><td style="border-bottom:1px solid #eee"><strong>Luggage</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($luggage, ENT_QUOTES).'</td></tr>' : '').'
+      '.($flight ? '<tr><td style="border-bottom:1px solid #eee"><strong>Flight No.</strong></td><td style="border-bottom:1px solid #eee">'.htmlspecialchars($flight, ENT_QUOTES).'</td></tr>' : '').'
     </table>
 
-    <p style="margin-top:18px">If your booking is urgent, please call <a href="tel:07415739444" style="color:#0a8754">07415 739444</a>.</p>
+    <p style="margin-top:18px">If your booking is urgent, please call <a href="tel:07415739444">07415 739444</a>.</p>
     <p style="margin-top:12px">Safe travels,<br><strong>Ace Tours & Transfers</strong><br>
-      <a href="https://acetoursandtransfers.co.uk" style="color:#0a8754">acetoursandtransfers.co.uk</a><br>
+      <a href="https://acetoursandtransfers.co.uk">acetoursandtransfers.co.uk</a><br>
       Bath, United Kingdom
     </p>
   </div>
@@ -119,56 +172,59 @@ $userHtml = '
 
 /* ---------- mailer factory ---------- */
 function makeMailer($host,$user,$pass,$fromEmail,$fromName){
-    $m = new PHPMailer(true);
-    $m->CharSet    = 'UTF-8';
-    $m->isSMTP();
-    $m->Host       = $host;
-    $m->SMTPAuth   = true;
-    $m->Username   = $user;
-    $m->Password   = $pass;
-    $m->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $m->Port       = 587;
-    $m->Hostname   = 'acetoursandtransfers.co.uk'; // EHLO domain
-    $m->setFrom($fromEmail, $fromName);
-    $m->Sender     = $fromEmail;
-    $m->MessageID  = sprintf('<%s.%s@acetoursandtransfers.co.uk>', time(), bin2hex(random_bytes(6)));
-    $m->addCustomHeader('X-Mailer', 'Ace Tours & Transfers / PHPMailer');
-    return $m;
+  $m = new PHPMailer(true);
+  $m->CharSet    = 'UTF-8';
+  $m->isSMTP();
+  $m->Host       = $host;
+  $m->SMTPAuth   = true;
+  $m->Username   = $user;
+  $m->Password   = $pass;
+  $m->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+  $m->Port       = 587;
+  $m->Hostname   = 'acetoursandtransfers.co.uk'; // EHLO domain
+  $m->setFrom($fromEmail, $fromName);
+  $m->Sender     = $fromEmail; // Return-Path
+  $m->MessageID  = sprintf('<%s.%s@acetoursandtransfers.co.uk>', time(), bin2hex(random_bytes(6)));
+  $m->addCustomHeader('X-Mailer', 'Ace Tours & Transfers / PHPMailer');
+  return $m;
 }
 
 /* ---------- send ---------- */
 try {
-    // 1) Owner notification
-    $owner = makeMailer($smtpHost,$smtpUser,$smtpPass,$fromEmail,$fromName);
-    $owner->addAddress($ownerTo, 'Ace Tours & Transfers');
-    $owner->addReplyTo($email, $name);
-    $owner->Subject = $ownerSubject;
-    $owner->isHTML(false);
-    $owner->Body    = $ownerBody;
-    $owner->addCustomHeader('X-Entity-Type','Notification');
+  // 1) Owner notification
+  $owner = makeMailer($smtpHost,$smtpUser,$smtpPass,$fromEmail,$fromName);
+  $owner->SMTPDebug = $debug ? 2 : 0;
+  $owner->addAddress($ownerTo, 'Ace Tours & Transfers');
+  $owner->addReplyTo($email, $name);
+  $owner->Subject = $ownerSubject;
+  $owner->isHTML(false);
+  $owner->Body    = $ownerBody;
+  $owner->addCustomHeader('X-Entity-Type','Notification');
 
-    if (!$owner->send()) {
-        echo 'error';
-        exit;
-    }
+  if (!$owner->send()) {
+    if ($debug) { header('Content-Type: text/plain'); echo $owner->ErrorInfo; }
+    echo 'error';
+    exit;
+  }
 
-    // 2) Customer auto-reply
-    $user = makeMailer($smtpHost,$smtpUser,$smtpPass,$fromEmail,$fromName);
-    $user->addAddress($email, $name);
-    $user->addReplyTo($fromEmail, $fromName);
-    $user->Subject = $userSubject;
-    $user->isHTML(true);
-    $user->Body    = $userHtml;
-    $user->AltBody = $userText;
+  // 2) Customer auto-reply
+  $userM = makeMailer($smtpHost,$smtpUser,$smtpPass,$fromEmail,$fromName);
+  $userM->SMTPDebug = $debug ? 2 : 0;
+  $userM->addAddress($email, $name);
+  $userM->addReplyTo($fromEmail, $fromName);
+  $userM->Subject = $userSubject;
+  $userM->isHTML(true);
+  $userM->Body    = $userHtml;
+  $userM->AltBody = $userText;
 
-    $user->addCustomHeader('Auto-Submitted', 'auto-replied');
-    $user->addCustomHeader(
-        'List-Unsubscribe',
-        '<mailto:'.$fromEmail.'>, <https://acetoursandtransfers.co.uk/#contact>'
-    );
+  $userM->addCustomHeader('Auto-Submitted', 'auto-replied');
+  $userM->addCustomHeader('List-Unsubscribe', '<mailto:'.$fromEmail.'>, <https://acetoursandtransfers.co.uk/#contact>');
 
-    echo $user->send() ? 'success' : 'error';
+  $ok = $userM->send();
+  if ($debug && !$ok) { header('Content-Type: text/plain'); echo $userM->ErrorInfo; }
+  echo $ok ? 'success' : 'error';
 
 } catch (Exception $e) {
-    echo 'error';
+  if ($debug) { header('Content-Type: text/plain'); echo $e->getMessage(); }
+  echo 'error';
 }
