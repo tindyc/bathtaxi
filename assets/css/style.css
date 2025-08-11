@@ -1144,3 +1144,10 @@ section {
   background-size: cover;
   background-position: center;
 }
+
+@media (max-width: 768px) {
+  .rounded-image {
+    margin: 15px; /* adds space around image */
+    border-radius: 15px;
+  }
+}
