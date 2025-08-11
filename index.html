@@ -445,7 +445,6 @@
     <!-- End Faq Section -->
 
 <!-- ======= Contact Section ======= -->
-<!-- ======= Contact Section ======= -->
 <section id="contact" class="contact py-5">
   <div class="container">
     <div class="section-title text-center mb-5">
@@ -480,7 +479,7 @@
       <!-- Contact Form -->
       <div class="col-lg-8">
         <div class="p-4 border rounded bg-light">
-          <form id="bookingForm" method="POST" novalidate>
+          <form id="bookingForm" action="send_email.php" method="POST">
             <div class="row g-3">
 
               <div class="col-md-6">
@@ -535,8 +534,8 @@
               </div>
 
               <div class="col-md-6">
-                <label for="number_of_luggage" class="form-label">Number of Luggage</label>
-                <input type="number" class="form-control" name="number_of_luggage" id="number_of_luggage" min="0" max="50" placeholder="e.g. 1 Small, 2 Medium, 1 Large">
+                <label for="number_of_luggage" class="form-label">Luggage</label>
+                <input type="text" class="form-control" name="number_of_luggage" id="number_of_luggage" placeholder="e.g. 1 Small, 2 Medium, 1 Large">
               </div>
 
               <div class="col-md-6">
@@ -554,11 +553,6 @@
                 <textarea name="message" class="form-control" id="message" rows="4" required></textarea>
               </div>
 
-              <!-- Alert Messages -->
-              <div class="col-12">
-                <div id="formAlert" class="mt-3"></div>
-              </div>
-
               <div class="col-12">
                 <button type="submit" class="btn btn-success w-100">Submit</button>
               </div>
@@ -570,6 +564,7 @@
     </div>
   </div>
 </section>
+
 <!-- End Contact Section -->
 
 <script>
