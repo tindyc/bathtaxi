@@ -240,7 +240,7 @@
             </p>
           </div>
           <div class="col-lg-3 cta-btn-container text-center">
-            <a class="cta-btn align-middle" href="#contact">Book Now!</a>
+            <a class="cta-btn align-middle" href="#bookingForm">Book Now!</a>
           </div>
         </div>
       </div>
@@ -317,6 +317,7 @@
           <div class="col-lg-4 col-md-6">
             <div class="box">
               <h3>Airport Transfers </h3>
+              <img src="assets/img/airport.jpg" alt="Airport Transfers" style="width:100%; height:auto; border-radius:8px; margin-bottom:15px;">
               <ul>
 
                 <li>Bristol Airport from £70 </li>
@@ -331,6 +332,7 @@
           <div class="col-lg-4 col-md-6 mt-4 mt-md-0">
             <div class="box recommended">
               <h3>Ports Transfers</h3>
+              <img src="assets/img/terminal.jpg" alt="Ports Transfer" style="width:100%; height:auto; border-radius:8px; margin-bottom:15px;">
               <ul>
                 <li>Southhampton Port from £180 </li> 
                 <li>Portsmouth port £200 </li>
@@ -342,6 +344,7 @@
           <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
             <div class="box">
               <h3>Cities</h3>
+              <img src="assets/img/city.jpg" alt="Cities Transfers" style="width:100%; height:auto; border-radius:8px; margin-bottom:15px;">
               <ul>
                 <li>Bristol from £40 </li>
                 <li>Swindon from £100 </li>
@@ -441,185 +444,127 @@
     </section>
     <!-- End Faq Section -->
 
-    <!-- ======= Contact Section ======= -->
 <!-- ======= Contact Section ======= -->
-<section id="contact" class="contact">
+<!-- ======= Contact Section ======= -->
+<section id="contact" class="contact py-5">
   <div class="container">
-    <div class="section-title">
+    <div class="section-title text-center mb-5">
       <h2>Contact</h2>
       <p>
         With our online booking system, there's no need to call.
         Enter your journey details below and we will call to confirm and dispatch a vehicle.
       </p>
     </div>
-  </div>
 
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-12">
-        <div class="wrapper">
-          <div class="row mb-5">
-            <div class="col-md-3">
-              <div class="dbox w-100 text-center">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="fa fa-map-marker"></span>
+    <div class="row g-4">
+      <!-- Contact Details -->
+      <div class="col-lg-4">
+        <div class="p-3 border rounded text-center mb-3">
+          <i class="fa fa-map-marker fa-2x text-success mb-2"></i>
+          <p><strong>Address:</strong><br> Bath, United Kingdom</p>
+        </div>
+        <div class="p-3 border rounded text-center mb-3">
+          <i class="fa fa-phone fa-2x text-success mb-2"></i>
+          <p><strong>Phone:</strong><br><a href="tel:07415739444">07415 739444</a></p>
+        </div>
+        <div class="p-3 border rounded text-center mb-3">
+          <i class="fa fa-paper-plane fa-2x text-success mb-2"></i>
+          <p><strong>Email:</strong><br><a href="mailto:contact@acetoursandtransfers.co.uk">contact@acetoursandtransfers.co.uk</a></p>
+        </div>
+        <div class="p-3 border rounded text-center">
+          <i class="fa fa-globe fa-2x text-success mb-2"></i>
+          <p><strong>Website:</strong><br>acetoursandtransfers.co.uk</p>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-lg-8">
+        <div class="p-4 border rounded bg-light">
+          <form id="bookingForm" method="POST" novalidate>
+            <div class="row g-3">
+
+              <div class="col-md-6">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" class="form-control" name="name" id="name" required minlength="3" pattern="^[A-Za-z\s]+$" title="Please enter at least 3 letters">
+              </div>
+
+              <div class="col-md-6">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" name="email" id="email" required title="Please enter a valid email address">
+              </div>
+
+              <div class="col-12">
+                <label for="number" class="form-label">Contact Number</label>
+                <input type="tel" class="form-control" name="number" id="number" required pattern="^[0-9\s\+\-]{7,15}$" title="Enter a valid phone number (7–15 digits)">
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Preferred Contact Method</label><br>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="preferred_contact" id="pref_phone" value="Phone" required>
+                  <label class="form-check-label" for="pref_phone">Phone</label>
                 </div>
-                <div class="text">
-                  <p><span>Address:</span> Bath, United Kingdom</p>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="preferred_contact" id="pref_email" value="Email" required>
+                  <label class="form-check-label" for="pref_email">Email</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="preferred_contact" id="pref_whatsapp" value="WhatsApp" required>
+                  <label class="form-check-label" for="pref_whatsapp">WhatsApp</label>
                 </div>
               </div>
-            </div>
-            <div class="col-md-3">
-              <div class="dbox w-100 text-center">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="fa fa-phone"></span>
-                </div>
-                <div class="text">
-                  <p><span>Phone:</span> <a href="tel://1234567920">0123 456 7890</a></p>
-                </div>
+
+              <div class="col-md-6">
+                <label for="date" class="form-label">Date of Travel</label>
+                <input type="date" class="form-control" name="date" id="date" required>
               </div>
-            </div>
-            <div class="col-md-3">
-              <div class="dbox w-100 text-center">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="fa fa-paper-plane"></span>
-                </div>
-                <div class="text">
-                  <p><span>Email:</span> <a href="mailto:contact@bathtaxi.com">contact@bathtaxi.com</a></p>
-                </div>
+
+              <div class="col-md-6">
+                <label for="time" class="form-label">Time of Travel</label>
+                <input type="time" class="form-control" name="time" id="time" required>
               </div>
-            </div>
-            <div class="col-md-3">
-              <div class="dbox w-100 text-center">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="fa fa-globe"></span>
-                </div>
-                <div class="text">
-                  <p><span>Website:</span> <a href="#">bathtaxi.com</a></p>
-                </div>
+
+              <div class="col-12">
+                <label for="flight_number" class="form-label">Flight Number (for airport transfers)</label>
+                <input type="text" class="form-control" name="flight_number" id="flight_number" placeholder="e.g. BA1432">
               </div>
-            </div>
-          </div>
 
-          <div class="row no-gutters">
-            <div class="col-md-7">
-              <div class="contact-wrap w-100 p-md-5 p-4">
-                <form id="bookingForm">
-                  <div class="row">
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="label" for="name">Full Name</label>
-                        <input type="text" class="form-control" name="name" id="name" required>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="label" for="email">Email Address</label>
-                        <input type="email" class="form-control" name="email" id="email" required>
-                      </div>
-                    </div>
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class="label" for="number">Contact Number</label>
-                        <input type="tel" class="form-control" name="number" id="number" required>
-                      </div>
-                    </div>
-
-                    <!-- Preferred Contact Method -->
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class="label d-block">Preferred Contact Method <span aria-hidden="true">*</span></label>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="preferred_contact" id="pref_phone" value="Phone" required>
-                          <label class="form-check-label" for="pref_phone">Phone</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="preferred_contact" id="pref_email" value="Email" required>
-                          <label class="form-check-label" for="pref_email">Email</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="preferred_contact" id="pref_whatsapp" value="WhatsApp" required>
-                          <label class="form-check-label" for="pref_whatsapp">WhatsApp</label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="label" for="date">Date of Travel</label>
-                        <input type="date" class="form-control" name="date" id="date" required>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="label" for="time">Time of Travel</label>
-                        <input type="time" class="form-control" name="time" id="time" required>
-                      </div>
-                    </div>
-
-                    <!-- Flight Number -->
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class="label" for="flight_number">Flight Number (for airport transfers)</label>
-                        <input type="text" class="form-control" name="flight_number" id="flight_number" placeholder="e.g. BA1432">
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="label" for="number_of_passenger">Number of Passenger</label>
-                        <input type="number" class="form-control" name="number_of_passenger" id="number_of_passenger" required>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="label" for="number_of_luggage">Number of Luggage (Large, Medium, Small)</label>
-                        <input type="number" class="form-control" name="number_of_luggage" id="number_of_luggage">
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="label" for="pickup">Pick Up Point</label>
-                        <input type="text" class="form-control" name="pickup" id="pickup" placeholder="Street name / Postcode" required>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="label" for="destination">Destination</label>
-                        <input type="text" class="form-control" name="destination" id="destination" placeholder="Street name / Postcode" required>
-                      </div>
-                    </div>
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class="label" for="message">Message</label>
-                        <textarea name="message" class="form-control" id="message" cols="30" rows="4"
-                          placeholder="Please let us know if you have any special request." required></textarea>
-                      </div>
-                    </div>
-
-                    <div class="col-md-12 mt-4">
-                      <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-
-                  </div>
-                </form>
+              <div class="col-md-6">
+                <label for="number_of_passenger" class="form-label">Number of Passengers</label>
+                <input type="number" class="form-control" name="number_of_passenger" id="number_of_passenger" min="1" max="50" required>
               </div>
-            </div>
 
-            <div class="col-md-5 d-flex align-items-stretch">
-              <div class="info-wrap w-100 p-5 img" style="background-image: url(assets/img/features.jpg);">
+              <div class="col-md-6">
+                <label for="number_of_luggage" class="form-label">Number of Luggage</label>
+                <input type="number" class="form-control" name="number_of_luggage" id="number_of_luggage" min="0" max="50" placeholder="e.g. 1 Small, 2 Medium, 1 Large">
               </div>
-            </div>
 
-          </div>
+              <div class="col-md-6">
+                <label for="pickup" class="form-label">Pick Up Point</label>
+                <input type="text" class="form-control" name="pickup" id="pickup" required>
+              </div>
+
+              <div class="col-md-6">
+                <label for="destination" class="form-label">Destination</label>
+                <input type="text" class="form-control" name="destination" id="destination" required>
+              </div>
+
+              <div class="col-12">
+                <label for="message" class="form-label">Message</label>
+                <textarea name="message" class="form-control" id="message" rows="4" required></textarea>
+              </div>
+
+              <!-- Alert Messages -->
+              <div class="col-12">
+                <div id="formAlert" class="mt-3"></div>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-success w-100">Submit</button>
+              </div>
+
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -627,7 +572,72 @@
 </section>
 <!-- End Contact Section -->
 
-    <!-- End Contact Section -->
+<script>
+document.getElementById("bookingForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    let form = e.target;
+    let alertBox = document.getElementById("formAlert");
+
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    let formData = new FormData(form);
+    fetch("send_email.php", { method: "POST", body: formData })
+    .then(res => res.text())
+    .then(data => {
+        if (data.trim() === "success") {
+            alertBox.innerHTML = `<div class="alert alert-success">✅ Thank you! Your message has been sent.</div>`;
+            form.reset();
+        } else {
+            alertBox.innerHTML = `<div class="alert alert-danger">❌ Error sending your message. Please try again.</div>`;
+        }
+    })
+    .catch(() => {
+        alertBox.innerHTML = `<div class="alert alert-danger">❌ Network error. Please try again later.</div>`;
+    });
+});
+</script>
+
+<!-- End Contact Section -->
+
+<!-- AJAX Form Script -->
+<script>
+document.getElementById("bookingForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let form = e.target;
+    let formData = new FormData(form);
+    let alertBox = document.getElementById("formAlert");
+
+    // Basic client-side validation
+    if (!form.checkValidity()) {
+        alertBox.innerHTML = `<div class="alert alert-danger">Please fill in all required fields correctly.</div>`;
+        return;
+    }
+
+    fetch("send_email.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data.trim() === "success") {
+            alertBox.innerHTML = `<div class="alert alert-success">✅ Thank you! Your message has been sent successfully.</div>`;
+            form.reset();
+        } else {
+            alertBox.innerHTML = `<div class="alert alert-danger">❌ Sorry, there was an error sending your message. Please try again.</div>`;
+        }
+    })
+    .catch(() => {
+        alertBox.innerHTML = `<div class="alert alert-danger">❌ Network error. Please try again later.</div>`;
+    });
+});
+</script>
+
+<!-- End Contact Section -->
+
   </main>
   <!-- End #main -->
 
