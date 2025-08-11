@@ -707,6 +707,17 @@ section {
 }
 
 /*--------------------------------------------------------------
+# Fleet
+--------------------------------------------------------------*/
+
+.fleet .card-img-top {
+  height: 180px; /* same height for all */
+  object-fit: contain; /* keeps image proportions */
+  background-color: white; /* optional: gives clean background */
+  padding: 10px; /* space around image */
+}
+
+/*--------------------------------------------------------------
 # Pricing
 --------------------------------------------------------------*/
 .pricing {
