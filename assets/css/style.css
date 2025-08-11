@@ -115,7 +115,7 @@ h6 {
 /* Book Now Button */
 .get-started-btn {
   margin-left: 25px;
-  background: #0d0099;;
+  background: #140f45;
   color: #fff;
   border-radius: 50px;
   padding: 8px 25px 9px 25px;
@@ -126,7 +126,7 @@ h6 {
 }
 
 .get-started-btn:hover {
-  background: #0d009961;;
+  background: #140f4550;
   color: #fff;
 }
 
@@ -200,7 +200,7 @@ h6 {
   height: 2px;
   bottom: -2px;
   left: 0;
-  background-color: #0d0099;;
+  background-color: #140f45;
   visibility: hidden;
   width: 0px;
   transition: all 0.3s ease-in-out 0s;
@@ -233,7 +233,7 @@ h6 {
   background: #fff;
   box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
   transition: 0.3s;
-  border-top: 2px solid #0d0099;;
+  border-top: 2px solid #140f45;
 }
 
 .navbar .dropdown ul li {
@@ -255,7 +255,7 @@ h6 {
 .navbar .dropdown ul a:hover,
 .navbar .dropdown ul .active:hover,
 .navbar .dropdown ul li:hover>a {
-  color: #0d0099;
+  color: #140f45;
 }
 
 .navbar .dropdown:hover>ul {
@@ -391,7 +391,7 @@ h6 {
 .navbar-mobile .dropdown ul a:hover,
 .navbar-mobile .dropdown ul .active:hover,
 .navbar-mobile .dropdown ul li:hover>a {
-  color: #0d0099;;
+  color: #140f45;
 }
 
 .navbar-mobile .dropdown>.dropdown-active {
@@ -491,7 +491,7 @@ section {
 }
 
 .section-bg {
-  background-color: #0d0099;
+  background-color: #140f45;
 }
 
 .section-title {
@@ -512,7 +512,7 @@ section {
   display: block;
   width: 50px;
   height: 3px;
-  background: #0d0099;
+  background: #140f45;
   bottom: 0;
   left: 0;
 }
@@ -549,7 +549,7 @@ section {
 .services .icon-box .icon {
   width: 64px;
   height: 64px;
-  background: #0d0099;
+  background: #140f45;
   border-radius: 50px;
   display: flex;
   align-items: center;
@@ -617,7 +617,7 @@ section {
   border-radius: 2px;
   transition: 0.5s;
   margin: 10px;
-  background: #0d0099;
+  background: #140f45;
   color: #fff;
   border-radius: 50px;
 }
@@ -679,9 +679,8 @@ section {
 
 .pricing .box h4 {
   font-size: 42px;
-  color: #0d0099;
+  color: #140f45;
   font-weight: 500;
-  font-family: "Open Sans", sans-serif;
   margin-bottom: 20px;
 }
 
@@ -711,7 +710,7 @@ section {
 }
 
 .pricing .box ul i {
-  color: #0d0099;
+  color: #140f45;
   font-size: 18px;
   padding-right: 4px;
 }
@@ -924,7 +923,7 @@ section {
 #footer .social-links a {
   font-size: 18px;
   display: inline-block;
-  background: #0d0099;
+  background: #140f45;
   color: #fff;
   line-height: 1;
   padding: 8px 0;
@@ -937,7 +936,7 @@ section {
 }
 
 #footer .social-links a:hover {
-  background: #090b53f2;
+  background: #140f4576;
   color: #fff;
   text-decoration: none;
 }
@@ -996,14 +995,14 @@ section {
 
 /* Override Bootstrap text-success in contact icons */
 #contact i {
-  color: #0d0099 !important; 
+  color: #140f45 !important; 
 }
 #bookingForm .btn-success {
-  background-color: #0d0099 !important; 
-  border-color: #0d0099 !important;
+  background-color: #140f45 !important; 
+  border-color: #140f45 !important;
 }
 
 #bookingForm .btn-success:hover {
-  background-color: #0b007a !important; 
-  border-color: #0b007a !important;
+  background-color: #140f45ca !important; 
+  border-color: #140f45ca !important;
 }
