@@ -84,21 +84,6 @@
     onscroll(document, headerScrolled)
   }
 
-  /**
-   * Back to top button
-   */
-  let backtotop = select('.back-to-top')
-  if (backtotop) {
-    const toggleBacktotop = () => {
-      if (window.scrollY > 100) {
-        backtotop.classList.add('active')
-      } else {
-        backtotop.classList.remove('active')
-      }
-    }
-    window.addEventListener('load', toggleBacktotop)
-    onscroll(document, toggleBacktotop)
-  }
 
   /**
    * Mobile nav toggle
@@ -148,16 +133,23 @@
     }
   });
 
-  /**
-   * Preloader
-   */
-  let preloader = select('#preloader');
-  if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove()
-    });
-  }
+  let preloader = document.getElementById('preloader');
+let destinationLogo = document.querySelector('.destination-logo');
 
+window.addEventListener('load', () => {
+  // Wait until the car animation finishes (~3s) before showing logo
+  setTimeout(() => {
+    destinationLogo.style.opacity = 1;
+  }, 3000); // fade in 3s after load
+
+  // Then fade out preloader after logo has been visible for a moment
+  setTimeout(() => {
+    preloader.classList.add('fade-out');
+    setTimeout(() => preloader.remove(), 600);
+  }, 4600); // total ~4.6s before preloader is removed
+});
+
+    
   /**
    * Initiate glightbox 
    */

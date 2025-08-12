@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ace Tours & Transfers</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(#87ceeb, #e0f7fa);
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* Hero Section */
+  .hero {
+    position: relative;
+    height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background: linear-gradient(180deg, #004d40, #00695c);
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    padding: 12px 25px;
+    background: #ffcc00;
+    color: #000;
+    font-weight: bold;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  .btn:hover {
+    background: #ffaa00;
+  }
+
+  /* Road */
+  .road {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
+    background: #333;
+    overflow: hidden;
+  }
+
+  /* Animated Taxi */
+  .taxi {
+    position: absolute;
+    bottom: 120px;
+    width: 300px;
+    animation: drive 6s linear infinite;
+  }
+
+  @keyframes drive {
+    0% { left: -350px; }
+    100% { left: 100%; }
+  }
+
+  /* Road stripes */
+  .stripe {
+    position: absolute;
+    bottom: 60px;
+    width: 100%;
+    height: 10px;
+    background: repeating-linear-gradient(
+      to right,
+      #fff,
+      #fff 40px,
+      transparent 40px,
+      transparent 80px
+    );
+    animation: moveStripe 1s linear infinite;
+  }
+
+  @keyframes moveStripe {
+    0% { background-position: 0; }
+    100% { background-position: -80px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>Travel in Comfort & Style</h1>
+  <p>Executive Transfers & Private Hire in Bath</p>
+  <a href="#booking" class="btn">Book Now</a>
+
+  <img src="assets/img/exeXL.png" alt="Mercedes V-Class Taxi" class="taxi">
+
+  <div class="road">
+    <div class="stripe"></div>
+  </div>
+</section>
+
+</body>
+</html>
