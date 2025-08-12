@@ -140,16 +140,21 @@ let car = document.querySelector('.preloader-taxi');
 
 if (preloader && destinationLogo && car) {
   window.addEventListener('load', () => {
-    // Reveal logo a bit sooner — right after the car starts leaving
+    // Car drives in and pauses, then drives off...
+    // Logo fade-in starts just after car begins disappearing
     setTimeout(() => {
-      destinationLogo.style.opacity = 1;
-    }, 3200); // was 4000, now sooner
+      car.classList.add('hide'); // fade out car
+    }, 3800); // car fade-out start
 
-    // Fade out preloader after logo reveal
+    setTimeout(() => {
+      destinationLogo.style.opacity = 1; // show logo earlier
+    }, 4000); // appears sooner after car starts disappearing
+
+    // Fade out preloader
     setTimeout(() => {
       preloader.classList.add('fade-out');
       setTimeout(() => preloader.remove(), 600);
-    }, 5000); // adjusted to match earlier logo reveal
+    }, 5500);
   });
 }
 
