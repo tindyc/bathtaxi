@@ -133,23 +133,20 @@
     }
   });
 
-  let preloader = document.getElementById('preloader');
+// Preloader (logo shows after car reaches center)
+let preloader = document.getElementById('preloader');
 let destinationLogo = document.querySelector('.destination-logo');
 
-window.addEventListener('load', () => {
-  // Wait until the car animation finishes (~3s) before showing logo
-  setTimeout(() => {
-    destinationLogo.style.opacity = 1;
-  }, 3000); // fade in 3s after load
+if (preloader && destinationLogo) {
+  window.addEventListener('load', () => {
+    setTimeout(() => { destinationLogo.style.opacity = 1; }, 3000); // show logo
+    setTimeout(() => {
+      preloader.classList.add('fade-out');
+      setTimeout(() => preloader.remove(), 600);
+    }, 4600); // then fade out
+  });
+}
 
-  // Then fade out preloader after logo has been visible for a moment
-  setTimeout(() => {
-    preloader.classList.add('fade-out');
-    setTimeout(() => preloader.remove(), 600);
-  }, 4600); // total ~4.6s before preloader is removed
-});
-
-    
   /**
    * Initiate glightbox 
    */
