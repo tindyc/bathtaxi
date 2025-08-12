@@ -136,14 +136,20 @@
 // Preloader (logo shows after car reaches center)
 let preloader = document.getElementById('preloader');
 let destinationLogo = document.querySelector('.destination-logo');
+let car = document.querySelector('.preloader-taxi');
 
-if (preloader && destinationLogo) {
+if (preloader && destinationLogo && car) {
   window.addEventListener('load', () => {
-    setTimeout(() => { destinationLogo.style.opacity = 1; }, 3000); // show logo
+    // Reveal logo a bit sooner — right after the car starts leaving
+    setTimeout(() => {
+      destinationLogo.style.opacity = 1;
+    }, 3200); // was 4000, now sooner
+
+    // Fade out preloader after logo reveal
     setTimeout(() => {
       preloader.classList.add('fade-out');
       setTimeout(() => preloader.remove(), 600);
-    }, 4600); // then fade out
+    }, 5000); // adjusted to match earlier logo reveal
   });
 }
 

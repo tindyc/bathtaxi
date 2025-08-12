@@ -48,41 +48,41 @@ h6 {
 .preloader-scene {
   position: relative;
   width: 100%;
-  max-width: 1000px;
-  height: 440px;
+  max-width: 1800px; /* wider max for big screens */
+  height: 580px; /* taller scene for desktop impact */
   display: flex;
   flex-direction: column;
-  justify-content: center; /* centers logo vertically in scene */
-  align-items: center;     /* centers logo horizontally */
+  justify-content: center;
+  align-items: center;
 }
 
-/* Logo WITH writing (single image) - bigger now */
+/* Logo WITH writing (single image) */
 .destination-logo {
-  width: clamp(340px, 48vw, 600px); /* bigger than before */
+  width: clamp(460px, 50vw, 900px); /* much bigger max for wide screens */
   height: auto;
   opacity: 0;
   transition: opacity 0.6s ease;
   z-index: 3;
-  margin-bottom: 120px; /* original spacing from car/road */
+  margin-bottom: 70px; /* closer to road */
 }
 
 /* Road */
 .road {
   position: absolute;
-  bottom: 58px;
+  bottom: 70px;
   width: 100%;
-  height: 90px;
+  height: 120px; /* thicker road */
   background: #2c2c2c;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 8px 14px rgba(0, 0, 0, 0.18);
   z-index: 1;
 }
 
 .road-stripe {
-  width: 90px;
-  height: 12px;
+  width: 120px; /* wider stripes */
+  height: 14px;
   background: #fff;
   border-radius: 4px;
 }
@@ -90,28 +90,76 @@ h6 {
 /* Car (exeXL.png) */
 .preloader-taxi {
   position: absolute;
-  bottom: 102px;
-  left: -420px;
+  bottom: 134px; /* matches bigger road */
+  left: -500px; /* start further off-screen left */
   z-index: 2;
-  width: clamp(260px, 30vw, 400px);
-  animation: driveToCenter 3s ease-out forwards,
+  width: clamp(340px, 30vw, 540px); /* bigger car */
+  animation: driveThrough 4.5s forwards,
              bounce 0.55s ease-in-out infinite alternate;
   user-select: none;
   -webkit-user-drag: none;
+  transition: opacity 0.5s ease;
 }
 
-/* Animations */
-@keyframes driveToCenter {
-  0% { left: -420px; }
-  100% { left: calc(50% - min(200px, 15vw)); }
+/* Drive from left to center, pause, then off-screen right with easing */
+@keyframes driveThrough {
+  0% { left: -500px; animation-timing-function: ease-out; }
+  40% { left: calc(50% - min(270px, 15vw)); animation-timing-function: ease-in; } /* Arrives & slows */
+  60% { left: calc(50% - min(270px, 15vw)); } /* Pause */
+  100% { left: 110%; } /* Speeds off-screen right */
 }
 
+/* Car fade-out if needed */
+.preloader-taxi.hide {
+  opacity: 0;
+}
+
+/* Bounce effect */
 @keyframes bounce {
   0% { transform: translateY(0); }
   100% { transform: translateY(-8px); }
 }
 
-/* Mobile tweaks */
+/* Tablet adjustments */
+@media (max-width: 1024px) {
+  .preloader-scene {
+    height: 500px;
+    max-width: 100%;
+  }
+  .destination-logo {
+    margin-bottom: 65px;
+    width: clamp(380px, 52vw, 720px);
+  }
+  .road {
+    bottom: 65px;
+    height: 100px;
+  }
+  .preloader-taxi {
+    bottom: 114px;
+    width: clamp(300px, 32vw, 460px);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .preloader-scene {
+    height: 440px;
+  }
+  .destination-logo {
+    margin-bottom: 60px;
+    width: clamp(340px, 50vw, 600px);
+  }
+  .road {
+    bottom: 58px;
+    height: 90px;
+  }
+  .preloader-taxi {
+    bottom: 102px;
+    width: clamp(260px, 30vw, 400px);
+  }
+}
+
+/* Small mobile */
 @media (max-width: 576px) {
   .preloader-scene {
     height: 400px;
@@ -124,7 +172,7 @@ h6 {
     bottom: 94px;
   }
   .destination-logo {
-    margin-bottom: 100px;
+    margin-bottom: 55px;
   }
 }
 
