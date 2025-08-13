@@ -140,25 +140,23 @@ let car = document.querySelector('.preloader-taxi');
 
 if (preloader && destinationLogo && car) {
   window.addEventListener('load', () => {
-    // Car drives in
-    // Show logo slightly before car starts to fade out
+    // Fade in logo just before the car fully stops
     setTimeout(() => {
-      destinationLogo.style.opacity = 1; // fade in logo sooner
-    }, 3400); // was 4000ms, now 3.4s so it feels smooth
+      destinationLogo.style.opacity = 1;
+    }, 2500); // earlier fade start
 
-    // Car starts disappearing
+    // Fade out car
     setTimeout(() => {
       car.classList.add('hide');
-    }, 3600); // was 3800ms
+    }, 3200);
 
-    // Fade out preloader
+    // Fade out entire preloader
     setTimeout(() => {
       preloader.classList.add('fade-out');
-      setTimeout(() => preloader.remove(), 600);
-    }, 5000); 
+      setTimeout(() => preloader.remove(), 500);
+    }, 4500);
   });
 }
-
 
   /**
    * Initiate glightbox 
