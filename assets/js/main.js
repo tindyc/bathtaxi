@@ -133,31 +133,6 @@
     }
   });
 
-// Preloader (logo shows as car reaches destination)
-let preloader = document.getElementById('preloader');
-let destinationLogo = document.querySelector('.destination-logo');
-let car = document.querySelector('.preloader-taxi');
-
-if (preloader && destinationLogo && car) {
-  window.addEventListener('load', () => {
-    // Fade in logo just before the car fully stops
-    setTimeout(() => {
-      destinationLogo.style.opacity = 1;
-    }, 2500); // earlier fade start
-
-    // Fade out car
-    setTimeout(() => {
-      car.classList.add('hide');
-    }, 3200);
-
-    // Fade out entire preloader
-    setTimeout(() => {
-      preloader.classList.add('fade-out');
-      setTimeout(() => preloader.remove(), 500);
-    }, 4500);
-  });
-}
-
   /**
    * Initiate glightbox 
    */
@@ -167,3 +142,30 @@ if (preloader && destinationLogo && car) {
 
 })()
 
+// Preloader 
+// Preloader
+let preloader = document.getElementById("preloader");
+let destinationLogo = document.querySelector(".destination-logo");
+let car = document.querySelector(".preloader-taxi");
+
+if (preloader && destinationLogo && car) {
+  destinationLogo.style.opacity = 0;
+
+  window.addEventListener("load", () => {
+    // Car starts to fade/move off after center pause
+    setTimeout(() => {
+      car.classList.add("hide"); // fade out car
+    }, 2000); // match when car leaves center in animation
+
+    // Logo fade in after car moves away
+    setTimeout(() => {
+      destinationLogo.style.opacity = 1;
+    }, 2100); // just after car starts moving off
+
+    // Fade out preloader sooner
+    setTimeout(() => {
+      preloader.classList.add("fade-out");
+      setTimeout(() => preloader.remove(), 600);
+    }, 3500); // total preloader time ~3.5s
+  });
+}
