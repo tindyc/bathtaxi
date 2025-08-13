@@ -8,4 +8,4 @@ node_modules/
 .github/
 cloudinary_python.txt
 .env
-.progress/progress.json
+progress/progress.json
