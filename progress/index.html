@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Progress Tracker</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #f4f4f4;
+        padding: 30px;
+    }
+    .progress-container {
+        background: #ddd;
+        border-radius: 25px;
+        overflow: hidden;
+        margin: 20px auto;
+        width: 80%;
+        height: 30px;
+    }
+    .progress-bar {
+        height: 100%;
+        background: #28a745;
+        width: 0%;
+        transition: width 0.4s ease;
+    }
+    .stats {
+        margin: 20px 0;
+        font-size: 18px;
+    }
+    button {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    button:hover {
+        background: #0056b3;
+    }
+    #message {
+        margin-top: 15px;
+        font-weight: bold;
+        color: #333;
+    }
+</style>
+</head>
+<body>
+
+<h1>Alan's job Progress Tracker</h1>
+<div class="stats">
+    Jobs Completed: <span id="jobsDone">0</span> / <span id="jobsTotal">0</span><br>
+    Jobs Remaining: <span id="jobsRemaining">0</span>
+</div>
+
+<div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<button id="addJobBtn">+1 Job Completed</button>
+<div id="message"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
