@@ -993,7 +993,7 @@ section {
   text-decoration: underline;
 }
 
-/* Preloader scene */
+
 /* ===============================
    Preloader Container
 ================================== */
@@ -1005,6 +1005,7 @@ section {
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  overflow: hidden;
 }
 
 /* ===============================
@@ -1012,41 +1013,46 @@ section {
 ================================== */
 .preloader-scene {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
-  padding: 2vh 2vw;
-  box-sizing: border-box;
 }
 
 /* ===============================
-   Logo
+   Group logo + road vertically
+================================== */
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(30px, 6vh, 80px); /* space between logo and road */
+}
+
+/* ===============================
+   Logo (big and proportional)
 ================================== */
 .destination-logo {
-  width: clamp(280px, 50vw, 880px); /* bigger min, scales more, bigger max */
+  width: clamp(360px, 70vw, 1400px);
   height: auto;
   opacity: 0;
   transition: opacity 0.6s ease;
-  margin-bottom: clamp(25px, 5vh, 70px);
-  z-index: 3;
 }
 
 /* ===============================
-   Road + Car Wrapper
+   Road Wrapper - always full width
 ================================== */
 .road-wrapper {
   position: relative;
-  width: 100vw;
+  width: 100vw; /* spans entire screen */
 }
 
 /* ===============================
-   Road
+   Road - full width, proportional height
 ================================== */
 .road {
   width: 100%;
-  height: clamp(100px, 11vh, 190px); /* taller for proportion */
+  height: clamp(110px, 12vh, 210px);
   background: #2c2c2c;
   display: flex;
   align-items: center;
@@ -1065,50 +1071,35 @@ section {
 }
 
 /* ===============================
-   Car (bigger, flush with road)
+   Car - sits slightly into road
 ================================== */
 .preloader-taxi {
   position: absolute;
-  bottom: calc(100% - 8px); /* overlaps road by 8px to remove gap */
+  bottom: calc(100% - 14px); /* wheels rest on road */
   left: -500px;
-  width: clamp(320px, 38vw, 720px); /* bigger for better proportion */
+  width: clamp(300px, 32vw, 660px);
   z-index: 2;
   animation: driveThrough 4.5s forwards, bounce 0.55s ease-in-out infinite alternate;
   transition: opacity 0.5s ease;
 }
 
 /* ===============================
-   Fade & Hide
-================================== */
-.fade-out {
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.hide {
-  opacity: 0;
-}
-
-/* ===============================
    Animations
 ================================== */
-
-/* Car movement with pause in center */
 @keyframes driveThrough {
   0% { left: -500px; animation-timing-function: ease-out; }
-  40% { left: calc(50% - min(360px, 19vw)); animation-timing-function: ease-in; }
-  60% { left: calc(50% - min(360px, 19vw)); }
+  40% { left: calc(50% - min(330px, 16vw)); animation-timing-function: ease-in; }
+  60% { left: calc(50% - min(330px, 16vw)); }
   100% { left: 110%; }
 }
 
-/* Bounce effect */
 @keyframes bounce {
   from { transform: translateY(0); }
   to { transform: translateY(-4%); }
 }
 
 /* ===============================
-   Mobile tweaks
+   Mobile Tweaks
 ================================== */
 @media (max-width: 480px) {
   .destination-logo {
