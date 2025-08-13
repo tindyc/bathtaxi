@@ -1015,20 +1015,20 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(20px, 5vh, 80px); /* smaller gap on short screens */
+  gap: clamp(20px, 5vh, 80px);
 }
 
 .destination-logo {
   display: block;
   margin: 0 auto;
-  /* Scale with viewport, but never exceed original size */
-  width: min(clamp(280px, 60vw, 900px), 90vh);
-  height: auto; /* preserve aspect ratio */
-  max-width: 100%; /* don’t overflow parent */
-  opacity: 0; /* fade-in */
+  max-width: min(90vw, 90vh); 
+  height: auto !important;   
+  width: auto !important;    
+  object-fit: contain;       
+  opacity: 0;               
   transition: opacity 0.6s ease;
-  align-self: center;
 }
+
 
 
 /* Road wrapper */
