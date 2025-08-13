@@ -993,7 +993,9 @@ section {
   text-decoration: underline;
 }
 
-/* ===== Preloader ===== */
+/* Preloader scene */
+
+/* Preloader container */
 #preloader {
   position: fixed;
   inset: 0;
@@ -1010,30 +1012,30 @@ section {
   pointer-events: none;
 }
 
+/* Scene container */
 .preloader-scene {
   position: relative;
   width: 100%;
+  max-width: 2000px; /* fits ultrawide screens */
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 /* Logo */
 .destination-logo {
-  width: clamp(320px, 50vw, 900px);
+  width: clamp(300px, 55vw, 1050px);
   height: auto;
   opacity: 0;
   transition: opacity 0.6s ease;
   z-index: 3;
-  margin-bottom: 5vh; /* consistent gap from road */
+  margin-bottom: 5vh; /* dynamic gap above road */
 }
 
-/* Road full width but positioned dynamically */
+/* Road */
 .road {
-  position: absolute;
-  bottom: 15%; /* lifted up from bottom for better spacing */
   width: 100%;
   height: 110px;
   background: #2c2c2c;
@@ -1042,8 +1044,10 @@ section {
   justify-content: space-evenly;
   box-shadow: inset 0 8px 14px rgba(0, 0, 0, 0.18);
   z-index: 1;
+  position: relative;
 }
 
+/* Road stripes */
 .road-stripe {
   width: 120px;
   height: 14px;
@@ -1054,15 +1058,16 @@ section {
 /* Car */
 .preloader-taxi {
   position: absolute;
-  bottom: calc(15% + 110px); /* sits just above the road */
+  bottom: calc(110px + 10px); /* sits just above road */
   left: -500px;
   z-index: 2;
-  width: clamp(260px, 28vw, 500px);
-  animation: driveThrough 4.5s forwards,
-             bounce 0.55s ease-in-out infinite alternate;
-  user-select: none;
-  -webkit-user-drag: none;
+  width: clamp(260px, 30vw, 540px);
+  animation: driveThrough 4.5s forwards, bounce 0.55s ease-in-out infinite alternate;
   transition: opacity 0.5s ease;
+}
+
+.preloader-taxi.hide {
+  opacity: 0;
 }
 
 /* Drive animation */
@@ -1081,45 +1086,26 @@ section {
 
 /* Tablet adjustments */
 @media (max-width: 1024px) {
+  .destination-logo {
+    margin-bottom: 7vh; /* slightly bigger gap for tablets */
+  }
   .road {
-    bottom: 12%;
     height: 100px;
   }
   .preloader-taxi {
-    bottom: calc(12% + 100px);
-    width: clamp(240px, 32vw, 450px);
+    bottom: calc(100px + 8px);
   }
 }
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
+  .destination-logo {
+    margin-bottom: 9vh;
+  }
   .road {
-    bottom: 10%;
     height: 90px;
   }
-  .destination-logo {
-    margin-bottom: 4vh;
-    width: clamp(260px, 65vw, 420px);
-  }
   .preloader-taxi {
-    bottom: calc(10% + 90px);
-    width: clamp(220px, 40vw, 380px);
-  }
-}
-
-/* Small mobile */
-@media (max-width: 576px) {
-  .road {
-    bottom: 8%;
-    height: 80px;
-  }
-  .road-stripe {
-    width: 90px;
-  }
-  .destination-logo {
-    margin-bottom: 3.5vh;
-  }
-  .preloader-taxi {
-    bottom: calc(8% + 80px);
+    bottom: calc(90px + 6px);
   }
 }

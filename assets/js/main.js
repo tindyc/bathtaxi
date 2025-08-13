@@ -142,29 +142,33 @@
 
 })()
 
-// Preloader 
+// Preloader
 let preloader = document.getElementById('preloader');
 let destinationLogo = document.querySelector('.destination-logo');
 let car = document.querySelector('.preloader-taxi');
 
 if (preloader && destinationLogo && car) {
   window.addEventListener('load', () => {
-
-    // Wait until the car is fully leaving the center before showing the logo
+    // Ensure preloader is visible for a short moment
     setTimeout(() => {
-      destinationLogo.style.opacity = 1;
-    }, 2600); // delayed so car has already moved off center
 
-    // Keep car visible until it's just about to exit the screen
-    setTimeout(() => {
-      car.classList.add('hide');
-    }, 3800); // smooth exit
+      // Show logo after car clears center (~2.6s into animation)
+      setTimeout(() => {
+        destinationLogo.style.opacity = 1;
+      }, 2600);
 
-    // Fade out preloader after car exits completely
-    setTimeout(() => {
-      preloader.classList.add('fade-out');
-      setTimeout(() => preloader.remove(), 500);
-    }, 4600);
+      // Fade out car after it’s nearly off screen
+      setTimeout(() => {
+        car.classList.add('hide');
+      }, 3600);
+
+      // Fade out preloader after all animations
+      setTimeout(() => {
+        preloader.classList.add('fade-out');
+        setTimeout(() => preloader.remove(), 500);
+      }, 4300);
+
+    }, 200); // 0.2s buffer to ensure visibility
   });
 }
 
