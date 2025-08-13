@@ -143,34 +143,27 @@
 })()
 
 // Preloader 
-let preloader = document.getElementById("preloader");
-let destinationLogo = document.querySelector(".destination-logo");
-let car = document.querySelector(".preloader-taxi");
+let preloader = document.getElementById('preloader');
+let destinationLogo = document.querySelector('.destination-logo');
+let car = document.querySelector('.preloader-taxi');
 
 if (preloader && destinationLogo && car) {
-  // Ensure logo starts invisible
-  destinationLogo.style.opacity = 0;
+  window.addEventListener('load', () => {
 
-  window.addEventListener("load", () => {
-    // Start car fade/move-off
+    // Logo fades in just after car leaves the center
     setTimeout(() => {
-      car.classList.add("hide");
-    }, 2600); // matches ~60% of driveThrough animation
+      destinationLogo.style.opacity = 1;
+    }, 2000); // matches when car is halfway leaving
 
-    // Fade in logo AFTER car is gone
+    // Car fades out right before it fully exits the screen
     setTimeout(() => {
-      requestAnimationFrame(() => {
-        destinationLogo.style.transition = "opacity 0.6s ease";
-        destinationLogo.style.opacity = 1;
-      });
-    }, 3000);
+      car.classList.add('hide');
+    }, 3500); // keeps car visible until it's almost gone
 
-    // Fade out whole preloader
+    // Fade out preloader shortly after car exits
     setTimeout(() => {
-      preloader.classList.add("fade-out");
-      setTimeout(() => preloader.remove(), 600);
-    }, 4200);
+      preloader.classList.add('fade-out');
+      setTimeout(() => preloader.remove(), 500);
+    }, 4200); // preloader ends faster but after full animation
   });
 }
-
-
