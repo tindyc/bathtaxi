@@ -143,29 +143,34 @@
 })()
 
 // Preloader 
-// Preloader
 let preloader = document.getElementById("preloader");
 let destinationLogo = document.querySelector(".destination-logo");
 let car = document.querySelector(".preloader-taxi");
 
 if (preloader && destinationLogo && car) {
+  // Ensure logo starts invisible
   destinationLogo.style.opacity = 0;
 
   window.addEventListener("load", () => {
-    // Car starts to fade/move off after center pause
+    // Start car fade/move-off
     setTimeout(() => {
-      car.classList.add("hide"); // fade out car
-    }, 2000); // match when car leaves center in animation
+      car.classList.add("hide");
+    }, 2600); // matches ~60% of driveThrough animation
 
-    // Logo fade in after car moves away
+    // Fade in logo AFTER car is gone
     setTimeout(() => {
-      destinationLogo.style.opacity = 1;
-    }, 2100); // just after car starts moving off
+      requestAnimationFrame(() => {
+        destinationLogo.style.transition = "opacity 0.6s ease";
+        destinationLogo.style.opacity = 1;
+      });
+    }, 3000);
 
-    // Fade out preloader sooner
+    // Fade out whole preloader
     setTimeout(() => {
       preloader.classList.add("fade-out");
       setTimeout(() => preloader.remove(), 600);
-    }, 3500); // total preloader time ~3.5s
+    }, 4200);
   });
 }
+
+
