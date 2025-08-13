@@ -1013,30 +1013,29 @@ section {
 .preloader-scene {
   position: relative;
   width: 100%;
-  height: 85vh; /* taller so road can go lower */
-  min-height: 700px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Logo */
 .destination-logo {
-  position: absolute;
-  top: 8%; /* higher for large screens to clear road */
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(320px, 45%, 900px);
+  width: clamp(320px, 50vw, 900px);
   height: auto;
   opacity: 0;
   transition: opacity 0.6s ease;
   z-index: 3;
+  margin-bottom: 5vh; /* consistent gap from road */
 }
 
-/* Road */
+/* Road full width but positioned dynamically */
 .road {
   position: absolute;
-  bottom: 100px; /* moved down for more space */
-  left: 0;
+  bottom: 15%; /* lifted up from bottom for better spacing */
   width: 100%;
-  height: 130px;
+  height: 110px;
   background: #2c2c2c;
   display: flex;
   align-items: center;
@@ -1055,7 +1054,7 @@ section {
 /* Car */
 .preloader-taxi {
   position: absolute;
-  bottom: calc(130px + 100px);
+  bottom: calc(15% + 110px); /* sits just above the road */
   left: -500px;
   z-index: 2;
   width: clamp(260px, 28vw, 500px);
@@ -1069,8 +1068,8 @@ section {
 /* Drive animation */
 @keyframes driveThrough {
   0% { left: -500px; animation-timing-function: ease-out; }
-  40% { left: calc(50% - min(250px, 14vw)); animation-timing-function: ease-in; }
-  60% { left: calc(50% - min(250px, 14vw)); }
+  40% { left: calc(50% - min(270px, 15vw)); animation-timing-function: ease-in; }
+  60% { left: calc(50% - min(270px, 15vw)); }
   100% { left: 110%; }
 }
 
@@ -1082,53 +1081,45 @@ section {
 
 /* Tablet adjustments */
 @media (max-width: 1024px) {
-  .preloader-scene {
-    height: 80vh;
-    min-height: 620px;
-  }
-  .destination-logo {
-    top: 10%;
-  }
   .road {
-    bottom: 90px;
+    bottom: 12%;
+    height: 100px;
   }
   .preloader-taxi {
-    bottom: calc(130px + 90px);
+    bottom: calc(12% + 100px);
+    width: clamp(240px, 32vw, 450px);
   }
 }
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
-  .preloader-scene {
-    height: 75vh;
-    min-height: 560px;
+  .road {
+    bottom: 10%;
+    height: 90px;
   }
   .destination-logo {
-    top: 24%; /* more centered for mobile */
-    width: clamp(280px, 65%, 500px);
-  }
-  .road {
-    bottom: 70px;
-    height: 100px;
+    margin-bottom: 4vh;
+    width: clamp(260px, 65vw, 420px);
   }
   .preloader-taxi {
-    bottom: calc(100px + 70px);
+    bottom: calc(10% + 90px);
+    width: clamp(220px, 40vw, 380px);
   }
 }
 
+/* Small mobile */
 @media (max-width: 576px) {
-  .preloader-scene {
-    height: 70vh;
-    min-height: 500px;
+  .road {
+    bottom: 8%;
+    height: 80px;
+  }
+  .road-stripe {
+    width: 90px;
   }
   .destination-logo {
-    top: 26%;
-  }
-  .road {
-    bottom: 60px;
-    height: 90px;
+    margin-bottom: 3.5vh;
   }
   .preloader-taxi {
-    bottom: calc(90px + 60px);
+    bottom: calc(8% + 80px);
   }
 }
